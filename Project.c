@@ -35,18 +35,17 @@ int main(){
 	printf("Exit (Press 0)\n");
 	printf("--------------------------------------------------\n");
 
-	printf("B or E?: ");
+	printf("1 or 0?: ");
 	scanf("%d",&next);
 
-	if(next == 1){
-		data();
-	}
 	while(next == 1){
+		data();
 		printf("Want something?: ");
 		scanf("%s",&Incart);
 		printf("How many? ");
 		scanf("%d",&Quantity);
 		fprintf(file,"%s,%d",Incart,Quantity);
+		printf("Want more?(choose 1/0)");
 		scanf("%d",&next);
 	}
 
