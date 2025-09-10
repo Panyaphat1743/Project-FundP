@@ -45,8 +45,10 @@ int main(){
 		printf("How many? ");
 		scanf("%d",&Quantity);
 		fprintf(file,"%s,%d",Incart,Quantity);
-		printf("Want more?(choose 1/0)");
+		printf("Want more?(choose 1/0): ");
 		scanf("%d",&next);
+		//press ... to update_data()
+		//press ... to read_csv()
 	}
 
 }
