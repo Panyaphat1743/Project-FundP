@@ -44,6 +44,7 @@ void Buy_data(){
 //void read_csv()
 //void update_data()
 //void delete()
+
 void search(){
 	char name[15];
 	char Refile[30];
@@ -51,10 +52,8 @@ void search(){
 	printf("Name : ");
 	scanf("%s",&name);
 	while(fgets(Refile,sizeof(Refile),file) != NULL){
-		if(name == Refile){
+		if(strstr(Refile,name) != NULL){
 			printf("You already add in your cart");
-		}else{
-			
 		}
 	}
 
@@ -90,7 +89,7 @@ int main(){
 		break;
 
 		case 4: //Search
-		void search();
+		search();
 		break;
 
 		case 5: //Exit
