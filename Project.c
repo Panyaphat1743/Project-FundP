@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void Buy_data(){
 
@@ -7,7 +8,7 @@ void Buy_data(){
 	int choice;
 	int Quantity;
 	char next;
-	
+
 	printf("data1 price\n");
 	printf("data2 price\n");
 	printf("data3 price\n");	
@@ -27,6 +28,7 @@ void Buy_data(){
 	scanf("%s",&Incart);
 	printf("How many? :");
 	scanf("%d",&Quantity);
+	fprintf(file,"%s,%d",Incart,Quantity);
 	printf("You want more?\n[1]Yes\n[2]No\n");
 	scanf("%d",&choice);
 
@@ -39,8 +41,24 @@ void Buy_data(){
 		scanf("%d",&choice);
 	}
 }
-//void update_data()
 //void read_csv()
+//void update_data()
+//void delete()
+void search(){
+	char name[15];
+	char Refile[30];
+	FILE*file = fopen("data.csv","r");
+	printf("Name : ");
+	scanf("%s",&name);
+	while(fgets(Refile,sizeof(Refile),file) != NULL){
+		if(name == Refile){
+			printf("You already add in your cart");
+		}else{
+			
+		}
+	}
+
+}
 
 int main(){
 
@@ -72,7 +90,7 @@ int main(){
 		break;
 
 		case 4: //Search
-		
+		void search();
 		break;
 
 		case 5: //Exit
