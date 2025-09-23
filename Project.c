@@ -42,7 +42,13 @@ void Buy_data(){
 	}
 }
 //void read_csv()
-//void update_data()
+void update_data(){
+	char DT[25];
+	FILE*file = fopen("data.csv","r");
+	while(fgets(DT,sizeof(DT),file) != NULL){
+		printf("%s",DT);
+	}
+}
 //void delete()
 
 void search(){
@@ -81,7 +87,7 @@ int main(){
 		break;
 
 		case 2: //Update
-		printf("Update");
+		update_data();
 		break;
 
 		case 3: //Delete
