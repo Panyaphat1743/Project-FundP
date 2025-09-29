@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-void Buy_data(){
+int Buy_data(){
 
 	char Incart[100];
 	FILE*file = fopen("data.csv","a");
 	int choice;
 	int Quantity;
 	char next;
+	int ans;
 
 	printf("data1 price\n");
 	printf("data2 price\n");
@@ -28,7 +29,7 @@ void Buy_data(){
 	scanf("%s",&Incart);
 	printf("How many? :");
 	scanf("%d",&Quantity);
-	fprintf(file,"%s,%d",Incart,Quantity);
+	fprintf(file,"%s,%d\n",Incart,Quantity);
 	printf("You want more?\n[1]Yes\n[2]No\n");
 	scanf("%d",&choice);
 
@@ -39,21 +40,27 @@ void Buy_data(){
 		scanf("%d",&Quantity);
 		printf("You want more?\n[1]Yes\n[2]No\n");
 		scanf("%d",&choice);
+		fprintf(file,"%s,%d\n",Incart,Quantity);
 	}
+	printf("Go back to Menu?(1/0)\n");
+	scanf("%d",&ans);
+	fclose(file);
+	return ans;
 }
 //void read_csv()
 void update_data(){
-	char DT[25];
+	char Refile[25];
 	FILE*file = fopen("data.csv","r");
-	while(fgets(DT,sizeof(DT),file) != NULL){
-		printf("%s",DT);
+	while(fgets(Refile,sizeof(Refile),file) != NULL){
+		printf("%s",Refile);
 	}
+	fclose(file);
 }
 //void delete()
 
 void search(){
 	char name[15];
-	char Refile[30];
+	char Refile[25];
 	FILE*file = fopen("data.csv","r");
 	printf("Name : ");
 	scanf("%s",&name);
@@ -62,12 +69,15 @@ void search(){
 			printf("You already add in your cart");
 		}
 	}
-
+	fclose(file);
 }
 
 int main(){
 
+	int ans = 0;
 	int choice;
+do{
+
 	printf("--------------------------------------------------\n");
 	printf("\t  Welcome to Best Item shop XD\n");
 	printf("choose your choice\n");
@@ -99,11 +109,13 @@ int main(){
 		break;
 
 		case 5: //Exit
-		printf("Thank for Buying");
+		printf("Thank for Buying\n");
 		break;
 
 		default:
 		printf("Error!!!! What do you select?");
 		break;
-	}
+		}
+	}while(ans != 0);
+	printf("Now you exit Go!!!");
 }
