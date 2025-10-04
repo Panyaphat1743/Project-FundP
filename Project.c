@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int Buy_data(){
+int Buy_data(){ //ซื้อของ
 
 	char Incart[100];
 	FILE*file = fopen("data.csv","a");
 	int choice;
 	int Quantity;
 	char next;
-	int ans;
+	char ID[10];
 
 	printf("P001 data1 price\n");
 	printf("P002 data2 price\n");
@@ -25,11 +25,13 @@ int Buy_data(){
 	printf("P013 data13 price\n");
 	printf("P014 data14 price\n");
 	printf("P015 data15 price\n");
-	printf("Want something?: ");
+	printf("have ID?: ");
+	scanf("%s",&ID);
+	printf("Name: ");
 	scanf("%s",&Incart);
 	printf("How many? :");
 	scanf("%d",&Quantity);
-	fprintf(file,"%s,%d\n",Incart,Quantity);
+	fprintf(file,"%s,%s,%d\n",ID,Incart,Quantity);
 	printf("You want more?\n[1]Yes\n[2]No\n");
 	scanf("%d",&choice);
 
@@ -48,11 +50,15 @@ int Buy_data(){
 	return choice;
 }
 
-void update_data(){
+void update_data(){ // เปลี่ยนจำนวนสินค้าที่ซื้อ
 	char line[100];
     char name[50];
     int newQty;
     int found = 0;
+	char ID[10];
+
+	printf("Enter product ID to update: ");
+    scanf("%s", ID);
 
     printf("Enter product name to update: ");
     scanf("%s", name);
@@ -63,22 +69,22 @@ void update_data(){
     FILE *file = fopen("data.csv", "r");
     FILE *temp = fopen("temp.csv", "w");
 
-    if (!file || !temp) {
+    if (!file || !temp) {/////////////////////////////////////////////แก้
         printf("Error opening file!\n");
         return;
     }
 
     while (fgets(line, sizeof(line), file)) {
         char item[50];
+		char ID [10];
         int qty;
 
-        sscanf(line, "%[^,],%d", item, &qty);
+        sscanf(line, "%[^,],%[^,],%d",&ID ,&item, &qty);
 
         if (strcmp(item, name) == 0) {
-            fprintf(temp, "%s,%d\n", item, newQty);
-            found = 1;
+            fprintf(temp, "%s,%s,%d\n",ID, item, newQty);
         } else {
-            fprintf(temp, "%s,%d\n", item, qty);
+            fprintf(temp, "%s,%s,%d\n", ID, item, qty);
         }
     }
 
@@ -87,15 +93,9 @@ void update_data(){
 
     remove("data.csv");
     rename("temp.csv", "data.csv");
-
-    if (found) {
-        printf("Update success!\n");
-    } else {
-        printf("Product not found!\n");
-    }
 }
 
-void search(){
+void search(){ //ค้นหา
 	char name[15];
 	char Refile[25];
 	FILE*file = fopen("data.csv","r");
@@ -107,6 +107,33 @@ void search(){
 		}
 	}
 	fclose(file);
+}
+
+void Delete(){
+
+	char line[40];
+	char DeleteID[10];
+	char ID[10];
+	char name[10];
+	int Q;
+
+	printf("ID: ");
+	scanf("%s",DeleteID);
+	FILE *file = fopen("data.csv","r");
+	FILE *temp = fopen("temp.csv", "w");
+	while(fgets(line,sizeof(line),file) != NULL){
+		sscanf(line, "%[^,],%[^,],%d" ,&ID,&name,&Q);
+		if(strcmp(DeleteID,ID) != 0){
+			fprintf(temp,"%s,%s,%d",ID,name,Q);
+		}
+	}
+
+	fclose(file);
+    fclose(temp);
+
+    remove("data.csv");
+    rename("temp.csv", "data.csv");
+
 }
 
 int main(){
@@ -137,7 +164,7 @@ do{
 		break;
 
 		case 3: //Delete
-		printf("delete");
+		Delete();
 		break;
 
 		case 4: //Search
