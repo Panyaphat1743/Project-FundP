@@ -10,21 +10,21 @@ int Buy_data(){
 	char next;
 	int ans;
 
-	printf("data1 price\n");
-	printf("data2 price\n");
-	printf("data3 price\n");	
-	printf("data4 price\n");
-	printf("data5 price\n");
-	printf("data6 price\n");
-	printf("data7 price\n");
-	printf("data8 price\n");
-	printf("data9 price\n");
-	printf("data10 price\n");
-	printf("data11 price\n");
-	printf("data12 price\n");
-	printf("data13 price\n");
-	printf("data14 price\n");
-	printf("data15 price\n");
+	printf("P001 data1 price\n");
+	printf("P002 data2 price\n");
+	printf("P003 data3 price\n");	
+	printf("P004 data4 price\n");
+	printf("P005 data5 price\n");
+	printf("P006 data6 price\n");
+	printf("P007 data7 price\n");
+	printf("P008 data8 price\n");
+	printf("P009 data9 price\n");
+	printf("P010 data10 price\n");
+	printf("P011 data11 price\n");
+	printf("P012 data12 price\n");
+	printf("P013 data13 price\n");
+	printf("P014 data14 price\n");
+	printf("P015 data15 price\n");
 	printf("Want something?: ");
 	scanf("%s",&Incart);
 	printf("How many? :");
@@ -43,20 +43,57 @@ int Buy_data(){
 		fprintf(file,"%s,%d\n",Incart,Quantity);
 	}
 	printf("Go back to Menu?(1/0)\n");
-	scanf("%d",&ans);
+	scanf("%d",&choice);
 	fclose(file);
-	return ans;
+	return choice;
 }
-//void read_csv()
+
 void update_data(){
-	char Refile[25];
-	FILE*file = fopen("data.csv","r");
-	while(fgets(Refile,sizeof(Refile),file) != NULL){
-		printf("%s",Refile);
-	}
-	fclose(file);
+	char line[100];
+    char name[50];
+    int newQty;
+    int found = 0;
+
+    printf("Enter product name to update: ");
+    scanf("%s", name);
+
+    printf("Enter new quantity: ");
+    scanf("%d", &newQty);
+
+    FILE *file = fopen("data.csv", "r");
+    FILE *temp = fopen("temp.csv", "w");
+
+    if (!file || !temp) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    while (fgets(line, sizeof(line), file)) {
+        char item[50];
+        int qty;
+
+        sscanf(line, "%[^,],%d", item, &qty);
+
+        if (strcmp(item, name) == 0) {
+            fprintf(temp, "%s,%d\n", item, newQty);
+            found = 1;
+        } else {
+            fprintf(temp, "%s,%d\n", item, qty);
+        }
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    remove("data.csv");
+    rename("temp.csv", "data.csv");
+
+    if (found) {
+        printf("Update success!\n");
+    } else {
+        printf("Product not found!\n");
+    }
 }
-//void delete()
 
 void search(){
 	char name[15];
@@ -74,7 +111,6 @@ void search(){
 
 int main(){
 
-	int ans = 0;
 	int choice;
 do{
 
@@ -85,7 +121,7 @@ do{
 	printf("(2)Update\n");
 	printf("(3)Delete\n");
 	printf("(4)Search\n");
-	printf("(5)Exit\n");
+	printf("(0)Exit\n");
 	printf("--------------------------------------------------\n");
 
 	printf("Choose: ");
@@ -93,7 +129,7 @@ do{
 
 	switch(choice){
 		case 1: //buy
-		Buy_data();
+		choice = Buy_data();
 		break;
 
 		case 2: //Update
@@ -108,7 +144,7 @@ do{
 		search();
 		break;
 
-		case 5: //Exit
+		case 0: //Exit
 		printf("Thank for Buying\n");
 		break;
 
@@ -116,6 +152,6 @@ do{
 		printf("Error!!!! What do you select?");
 		break;
 		}
-	}while(ans != 0);
+	}while(choice != 0);
 	printf("Now you exit Go!!!");
 }
