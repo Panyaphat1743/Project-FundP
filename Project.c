@@ -6,12 +6,13 @@ int Buy_data(){ //ซื้อของ
 	char Incart[100];
 	char line[25];
 	FILE*file = fopen("data.csv","a");
-	FILE*StockFile = fopen("MasterData.csv","r");
 	int choice;
 	int Quantity;
 	char next;
-	char ALLID[]= "P001P002P003P004P005P006P007P008P009P0010P011P012P013P014P015";
+	char ALL_ID[] = "P001P002P003P004P005P006P007P008P009P0010P011P012P013P014P015";
+	char ALL_PD[] = "data1data2data3data4data5data6data7data8data9data10data11data12data13data14data15";
 	char ID[10];
+	int check;
 
 	printf("P001 data1 price\n");
 	printf("P002 data2 price\n");
@@ -31,16 +32,26 @@ int Buy_data(){ //ซื้อของ
 	printf("have ID?: ");
 	scanf("%s",&ID);
 	
-	while(strstr(ALLID,ID) == NULL || ID[0] != 'P' || strlen(ID) != 4){
+	while(strstr(ALL_ID,ID) == NULL || ID[0] != 'P' || strlen(ID) != 4){
 		printf("You didnt see my list?\n");
 		printf("Type new ID: ");
 		scanf("%s",&ID);
 	}
 	printf("Name: ");
 	scanf("%s",&Incart);
+	while(strstr(ALL_PD,Incart) == NULL || Incart[0] != 'd' || strlen(Incart) < 5 || Incart[5] == 'd'){
+		printf("Open your eye and see again\n");
+		printf("Type new Name: ");
+		scanf("%s",&Incart);
+	}
 
 	printf("How many? :");
-	scanf("%d",&Quantity);
+	check = scanf("%d",&Quantity);
+	while(Quantity <= 0 || check == 0){
+		printf("Type only positive integer: ");
+		while(getchar() != '\n');
+		check = scanf("%d",&Quantity);
+	}
 	fprintf(file,"%s,%s,%d\n",ID,Incart,Quantity);
 	printf("You want more?\n[1]Yes\n[2]No\n");
 	scanf("%d",&choice);
@@ -190,7 +201,7 @@ do{
 		break;
 
 		default:
-		printf("Error!!!! What do you select?");
+		printf("Error!!!! What do you select?\n");
 		break;
 		}
 	}while(choice != 0);
