@@ -4,10 +4,13 @@
 int Buy_data(){ //ซื้อของ
 
 	char Incart[100];
+	char line[25];
 	FILE*file = fopen("data.csv","a");
+	FILE*StockFile = fopen("MasterData.csv","r");
 	int choice;
 	int Quantity;
 	char next;
+	char ALLID[]= "P001P002P003P004P005P006P007P008P009P0010P011P012P013P014P015";
 	char ID[10];
 
 	printf("P001 data1 price\n");
@@ -27,8 +30,15 @@ int Buy_data(){ //ซื้อของ
 	printf("P015 data15 price\n");
 	printf("have ID?: ");
 	scanf("%s",&ID);
+	
+	while(strstr(ALLID,ID) == NULL || ID[0] != 'P' || strlen(ID) != 4){
+		printf("You didnt see my list?\n");
+		printf("Type new ID: ");
+		scanf("%s",&ID);
+	}
 	printf("Name: ");
 	scanf("%s",&Incart);
+
 	printf("How many? :");
 	scanf("%d",&Quantity);
 	fprintf(file,"%s,%s,%d\n",ID,Incart,Quantity);
@@ -69,7 +79,7 @@ void update_data(){ // เปลี่ยนจำนวนสินค้าท
     FILE *file = fopen("data.csv", "r");
     FILE *temp = fopen("temp.csv", "w");
 
-    if (!file || !temp) {/////////////////////////////////////////////แก้
+    if (file == NULL || temp == NULL) {/////////////////////////////////////////////แก้
         printf("Error opening file!\n");
         return;
     }
@@ -104,7 +114,11 @@ void search(){ //ค้นหา
 	while(fgets(Refile,sizeof(Refile),file) != NULL){
 		if(strstr(Refile,name) != NULL){
 			printf("You already add in your cart");
+		}else{
+			printf("Hmmmmmmmm YOU NOT ADD :( \n");
+			break;
 		}
+
 	}
 	fclose(file);
 }
