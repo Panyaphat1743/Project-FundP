@@ -6,6 +6,7 @@ int Buy_data(){ //ซื้อของ
 	char Incart[100];
 	char line[25];
 	FILE*file = fopen("data.csv","a");
+	FILE*R_file = fopen("data.csv","r");
 	int choice;
 	int Quantity;
 	char next;
@@ -14,28 +15,49 @@ int Buy_data(){ //ซื้อของ
 	char ID[10];
 	int check;
 
-	printf("P001 data1 price\n");
-	printf("P002 data2 price\n");
-	printf("P003 data3 price\n");	
-	printf("P004 data4 price\n");
-	printf("P005 data5 price\n");
-	printf("P006 data6 price\n");
-	printf("P007 data7 price\n");
-	printf("P008 data8 price\n");
-	printf("P009 data9 price\n");
-	printf("P010 data10 price\n");
-	printf("P011 data11 price\n");
-	printf("P012 data12 price\n");
-	printf("P013 data13 price\n");
-	printf("P014 data14 price\n");
-	printf("P015 data15 price\n");
+	printf("P001 data1 price1\n");
+	printf("P002 data2 price2\n");
+	printf("P003 data3 price3\n");
+	printf("P004 data4 price4\n");
+	printf("P005 data5 price5\n");
+	printf("P006 data6 price6\n");
+	printf("P007 data7 price7\n");
+	printf("P008 data8 price8\n");
+	printf("P009 data9 price9\n");
+	printf("P010 data10 price10\n");
+	printf("P011 data11 price11\n");
+	printf("P012 data12 price12\n");
+	printf("P013 data13 price13\n");
+	printf("P014 data14 price14\n");
+	printf("P015 data15 price15\n");
 	printf("have ID?: ");
 	scanf("%s",&ID);
-	
+	while(fgets(line,sizeof(line),R_file)){//check ว่ามียัง
+		while(strstr(line,ID) != NULL){
+			printf("You already add try another: ");
+			scanf("%s",&ID);
+		}
+	}
+
+	fclose(R_file);
+
+	if(ID[0] == 'p'){
+		ID[0] = ID[0] - 32;
+	}
+
 	while(strstr(ALL_ID,ID) == NULL || ID[0] != 'P' || strlen(ID) != 4){
 		printf("You didnt see my list?\n");
 		printf("Type new ID: ");
 		scanf("%s",&ID);
+		R_file = fopen("data.csv","r");
+		while(fgets(line,sizeof(line),R_file)){
+			while(strstr(line,ID) != NULL){
+				printf("You already add try another: ");
+				scanf("%s",&ID);
+				fclose(R_file);
+				R_file = fopen("data.csv","r");
+	}
+		}
 	}
 	printf("Name: ");
 	scanf("%s",&Incart);
@@ -57,13 +79,52 @@ int Buy_data(){ //ซื้อของ
 	scanf("%d",&choice);
 
 	while(choice == 1){
-		printf("And you want:");
+		printf("have ID?: ");
+	scanf("%s",&ID);
+	while(fgets(line,sizeof(line),R_file)){//check ว่ามียัง
+		while(strstr(line,ID) != NULL){
+			printf("You already add try another: ");
+			scanf("%s",&ID);
+		}
+	}
+
+	fclose(R_file);
+
+	if(ID[0] == 'p'){
+		ID[0] = ID[0] - 32;
+	}
+
+	while(strstr(ALL_ID,ID) == NULL || ID[0] != 'P' || strlen(ID) != 4){
+		printf("You didnt see my list?\n");
+		printf("Type new ID: ");
+		scanf("%s",&ID);
+		R_file = fopen("data.csv","r");
+		while(fgets(line,sizeof(line),R_file)){
+			while(strstr(line,ID) != NULL){
+				printf("You already add try another: ");
+				scanf("%s",&ID);
+				fclose(R_file);
+				R_file = fopen("data.csv","r");
+	}
+		}
+	}
+		printf("Name: ");
+	scanf("%s",&Incart);
+	while(strstr(ALL_PD,Incart) == NULL || Incart[0] != 'd' || strlen(Incart) < 5 || Incart[5] == 'd'){
+		printf("Open your eye and see again\n");
+		printf("Type new Name: ");
 		scanf("%s",&Incart);
+	}
 		printf("How many? :");
-		scanf("%d",&Quantity);
+	check = scanf("%d",&Quantity);
+	while(Quantity <= 0 || check == 0){
+		printf("Type only positive integer: ");
+		while(getchar() != '\n');
+		check = scanf("%d",&Quantity);
+	}
 		printf("You want more?\n[1]Yes\n[2]No\n");
+		fprintf(file,"%s,%s,%d,\n",ID,Incart,Quantity);
 		scanf("%d",&choice);
-		fprintf(file,"%s,%d\n",Incart,Quantity);
 	}
 	printf("Go back to Menu?(1/0)\n");
 	scanf("%d",&choice);
@@ -116,7 +177,7 @@ void update_data(){ // เปลี่ยนจำนวนสินค้าท
     rename("temp.csv", "data.csv");
 }
 
-void search(){ //ค้นหา
+void search(){ //ค้นหา//////////////////////////////////////////////////////////////////////////////////แก้(P,p)
 	char name[15];
 	char Refile[25];
 	FILE*file = fopen("data.csv","r");
