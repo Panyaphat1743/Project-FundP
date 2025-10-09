@@ -199,29 +199,38 @@ void update_data(){ // เปลี่ยนจำนวนสินค้าท
 	rename("temp.csv", "data.csv");
 }
 
-void search()
-{ // ค้นหา//////////////////////////////////////////////////////////////////////////////////แก้(P,p)
-	char name[50];
-	char Refile[50];
-	int found;
-	FILE *file = fopen("data.csv", "r");
-	printf("Name : ");
-	scanf("%s", &name);
-	while (fgets(Refile, sizeof(Refile), file) != NULL)
-	{
-		found = 0;
-		if (strstr(Refile, name) != NULL)
-		{
-			printf("You already add in your cart\n");
-			found = 1;
-			break;
-		}
+int search_in_file(const char *filename, const char *fromkeyword)//ของ search
+{
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+		return -1;
 	}
-	if(found == 0){
-		printf("You not add yet\n");
-	}
+    char line[100];
+    while (fgets(line, sizeof(line), file))
+    {
+        if (strstr(line, fromkeyword) != NULL)
+        {
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+    return 0;
+}
 
-	fclose(file);
+void search(){ // ฟังชันค้นหา////////////////////////////////////////////////////////แก้(P,p)
+	char name[15];
+    printf("Name : ");
+    scanf("%s", name);
+
+    int result = search_in_file("data.csv", name);
+
+    if (result == 1)
+        printf("You already add in your cart\n");
+    else if (result == 0)
+        printf("Hmmmmmmmm YOU NOT ADD :(\n");
+    else
+        printf("Error: cannot open file\n");
 }
 
 void Delete()
@@ -299,7 +308,7 @@ int main()
 			break;
 
 		case 6: // E2E test
-			printf("E2E");
+			E2E_test();
 			break;
 
 		case 0: // Exit
