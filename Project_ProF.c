@@ -283,19 +283,6 @@ int main()
 		printf("(0)Exit\n");
 		printf("--------------------------------------------------\n");
 
-	char buf[16];
-	int choice;
-
-		printf("Choose: ");
-		if (fgets(buf, sizeof(buf), stdin))
-	{
-    	choice = atoi(buf); 
-	}
-		else
-	{
-    	choice = -1; 
-	}
-
 		switch (choice)
 		{
 		case 1: // buy
@@ -333,4 +320,5 @@ int main()
 	} while (choice != 0);
 	printf("Now you exit Go!!!");
 }
+
 
