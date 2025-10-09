@@ -116,7 +116,8 @@ final.exe
 > all:
 >   gcc Project_ProF.c Unit_test.c E2E_test.c -o final.exe
 > run:
->   ./final.exe
+>   .\final.exe
 > clean:
 >   rm -f data.csv temp.csv final.exe
+
 > ```
