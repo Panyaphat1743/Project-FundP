@@ -65,7 +65,6 @@ int get_quantity() {//จำนวน
         printf("Type only positive integer or too much?: ");
         check = scanf("%d", &q);
         while (getchar() != '\n');
-        return -1;
     }
     return q;
 }
@@ -334,3 +333,4 @@ int main()
 	} while (choice != 0);
 	printf("Now you exit Go!!!");
 }
+
