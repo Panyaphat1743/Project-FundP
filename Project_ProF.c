@@ -266,7 +266,7 @@ void Delete()
 
 int main()
 {
-    int choice = -1; // ให้ค่าเริ่มต้นไว้ก่อน
+    int choice = -1;
 
     do {
         printf("--------------------------------------------------\n");
@@ -317,6 +317,7 @@ int main()
     printf("Now you exit Go!!!");
     return 0;
 }
+
 
 
 
