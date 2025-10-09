@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "Product_system.h"
+#include <stdlib.h>
+
 
 #define PRODUCT_COUNT 15
 
@@ -61,9 +63,9 @@ int get_quantity() {//จำนวน
     check = scanf("%d", &q);
     while (q <= 0 || check == 0 || q >= 6000) {
         printf("Type only positive integer or too much?: ");
+        check = scanf("%d", &q);
         while (getchar() != '\n');
         return -1;
-        check = scanf("%d", &q);
     }
     return q;
 }
@@ -282,8 +284,18 @@ int main()
 		printf("(0)Exit\n");
 		printf("--------------------------------------------------\n");
 
+	char buf[16];
+	int choice;
+
 		printf("Choose: ");
-		scanf("%d", &choice);
+		if (fgets(buf, sizeof(buf), stdin))
+	{
+    	choice = atoi(buf); 
+	}
+		else
+	{
+    	choice = -1; 
+	}
 
 		switch (choice)
 		{
