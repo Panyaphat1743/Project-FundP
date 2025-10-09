@@ -266,59 +266,57 @@ void Delete()
 
 int main()
 {
+    int choice = -1; // ให้ค่าเริ่มต้นไว้ก่อน
 
-	int choice;
-	do
-	{
+    do {
+        printf("--------------------------------------------------\n");
+        printf("\t  Welcome to Best Item shop XD\n");
+        printf("choose your choice\n");
+        printf("(1) Let Buy\n");
+        printf("(2) Update\n");
+        printf("(3) Delete\n");
+        printf("(4) Search\n");
+        printf("(5) Unit test\n");
+        printf("(6) E2E test\n");
+        printf("(0) Exit\n");
+        printf("--------------------------------------------------\n");
 
-		printf("--------------------------------------------------\n");
-		printf("\t  Welcome to Best Item shop XD\n");
-		printf("choose your choice\n");
-		printf("(1)Let Buy\n");
-		printf("(2)Update\n");
-		printf("(3)Delete\n");
-		printf("(4)Search\n");
-        printf("(5)Unit test\n");
-        printf("(6)E2E test\n");
-		printf("(0)Exit\n");
-		printf("--------------------------------------------------\n");
+        printf("Enter choice: ");  
+        scanf("%d", &choice);        
 
-		switch (choice)
-		{
-		case 1: // buy
-			choice = Buy_data();
-			break;
+        switch (choice)
+        {
+        case 1:
+            choice = Buy_data();
+            break;
+        case 2:
+            update_data();
+            break;
+        case 3:
+            Delete();
+            break;
+        case 4:
+            search();
+            break;
+        case 5:
+            run();
+            break;
+        case 6:
+            E2E_test();
+            break;
+        case 0:
+            printf("Thank for Buying\n");
+            break;
+        default:
+            printf("Error!!!! What do you select?\n");
+            break;
+        }
 
-		case 2: // Update
-			update_data();
-			break;
+    } while (choice != 0);
 
-		case 3: // Delete
-			Delete();
-			break;
-
-		case 4: // Search
-			search();
-			break;
-
-		case 5: // Unit test
-			run();
-			break;
-
-		case 6: // E2E test
-			E2E_test();
-			break;
-
-		case 0: // Exit
-			printf("Thank for Buying\n");
-			break;
-
-		default:
-			printf("Error!!!! What do you select?\n");
-			break;
-		}
-	} while (choice != 0);
-	printf("Now you exit Go!!!");
+    printf("Now you exit Go!!!");
+    return 0;
 }
+
 
 
